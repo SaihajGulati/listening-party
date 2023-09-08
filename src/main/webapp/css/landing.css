@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+html{
+	background: linear-gradient(57deg, blue, #d91c1c);
+	background-repeat: no-repeat;
+	height: 100%;
+}
+
+.logo{
+	font-family: Arial;	
+	color: white;
+	text-align: center;
+	padding-top: 120px;
+	font-size: 40px;
+}
+
+.loginBt{
+	background-color: #0ab48f;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	width: 200px;
+	margin-top: 50px;
+	margin-left: 530px;
+	font-size: 20px;
+}
+
+.RegisterBt{
+	background-color: #0ab48f;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	width: 200px;
+	margin-top: 20px;
+	margin-left: 530px;
+	font-size: 20px;
+}
+
+.GuestBt{
+	background-color: #0ab48f;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	width: 200px;
+	margin-top: 20px;
+	margin-left: 530px;
+	font-size: 20px;
+}

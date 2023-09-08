@@ -1,0 +1,66 @@
+body {
+  	font-family: Arial, sans-serif;
+	background: linear-gradient(57deg, blue, #d91c1c);
+	background-repeat: no-repeat;
+  	background-attachment: fixed;
+    color:#fff;
+  margin: 0;
+  padding: 0;
+  
+}
+
+
+header {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+	background: linear-gradient(57deg, blue, #d91c1c);
+	background-repeat: no-repeat;
+  	background-attachment: fixed;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Add padding to the main element */
+main {
+  padding: 2rem;
+}
+
+.room
+{
+	margin-bottom: 16px;
+}
+
+.rooms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.rounded-rectangle {
+  /*border: 1px solid #ccc;*/
+  border-radius: 10px;
+  background-color: #5D3FD3;
+  color: white;
+  padding: 1rem;
+  width: 200px;
+  text-align: center;
+}
+
+button {
+  background-color: #0ab48f;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}

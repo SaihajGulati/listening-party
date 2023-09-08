@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="css/room.css">
+	<meta charset="UTF-8">
+	<title>201 Project Rooms</title>
+	<script>
+		var socket;
+		var username = localStorage.getItem("username");
+
+		// Get room name from URL
+		const urlParams = new URL(window.location.toLocaleString()).searchParams;
+		const roomName = urlParams.get('roomName');
+		document.title = roomName;
+
+		// Handle websocket information
+		function connectToServer() {
+			socket = new WebSocket("ws://localhost:8080/Project201/ws");
+			socket.onopen = function (event) {
+				joinRoom(roomName);
+			}
+
+			socket.onmessage = function (event) {
+				console.log(event.data)
+				data = JSON.parse(event.data);
+				switch (data.type) {
+					case "join":
+						let songId = data.currentSongId;
+						playSong(songId);
+					break;
+					case "text":
+						// returns the latest message a user posted
+						text = data.message;
+						updateChatBox(text);
+						break;
+					case "next":
+						// returns next song
+						let videoId = data.nextSong;
+						playSong(videoId);
+						break;
+				}
+			}
+		}
+
+		function queueSong(videoId) {
+			var select = document.getElementById("song-list");
+ 			const params = {
+				"type": "queue",
+				"videoId": select.value,
+				"roomName": roomName
+			}
+			socket.send(JSON.stringify(params));
+		}
+		
+		function nextSong() {
+			const params = {
+				"type": "next",
+				"roomName": roomName
+			}
+			socket.send(JSON.stringify(params));
+		}
+
+
+		function getRooms() {
+			const params = {
+				"type": "get",
+			}
+			socket.send(JSON.stringify(params));
+		}
+		
+		function createNewRoom(newRoomName) {
+			const params = {
+				"type": "create",
+				"roomName": newRoomName
+			}
+			socket.send(JSON.stringify(params));
+		}
+
+		function joinRoom() {
+			const params = {
+				"username": username,
+				"type": "join",
+				"roomName": roomName
+			}
+			socket.send(JSON.stringify(params));
+		}
+
+		function sendText(message) {
+			const params = {
+				"type": "text",
+				"message": message,
+				"roomName": roomName
+			}
+			socket.send(JSON.stringify(params));
+		}
+		
+		function playSong(songId) {
+			document.getElementById("songPlayer").src = "https://www.youtube.com/embed/" + songId + "?loop=1&autoplay=0&controls=0";
+		}
+		
+		function logout_leave()
+		{
+			localStorage.removeItem('username');
+			window.location.replace("http://localhost:8080/Project201/landing.html")
+		}
+	</script>
+</head>
+
+<body onload="connectToServer()" class="player">
+
+	<a href="javascript: logout_leave()" class="logout_leave">Log Out / Leave</a>
+	
+	<div class="content">
+		
+		<h1 id="playerTitle"></h1>
+		
+		<script>
+		 	// Set title to room name
+			document.getElementById("playerTitle").innerHTML = roomName;
+		</script>
+		<div class="player-box">
+			<h2>Now Playing</h2>
+			<iframe id="songPlayer" style="pointer-events: auto;" width="100%" height="315"
+				src="">
+			</iframe>
+		</div>
+		<div class="control-box">
+			<button type="button" onclick="nextSong()">Next</button>
+			<form onsubmit="queueSong(); return false;">
+			<select id="song-list" onchange="changeMe(this)">
+			<option value = "" selected disabled hidden="">Select song</option>
+			</select>
+			<input type="submit" value="Add to Queue">
+			</form>
+		</div>
+		<form onsubmit="sendTextFromForm(); return false;">
+		    <input id="chatInput" type="text" placeholder = "Type Message">
+		    <input type="submit" value="Send Message">
+		</form>
+		<div id="chat-box">
+		</div>
+	</div>
+	 <script>
+        function updateChatBox(text) {
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('p');
+            messageElement.classList.add('chat-message');
+            messageElement.innerHTML += text;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+	function changeMe(sel)
+        {
+          sel.style.color = "#000";              
+        }
+		 
+        function sendTextFromForm() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value;
+            sendText(message);
+            chatInput.value = '';
+        }
+    </script>
+</body>
+<script>
+// Add possible songs to the select option
+var songs = {
+	    "Grupo Frontera x Bad Bunny - un x100to": "3inw26U-os4",
+	    "Ice Spice & Nicki Minaj - Princess Diana": "gMq-I0dejjE",
+	    "Ella Baila Sola - Eslabon Armado y Peso Pluma": "lZiaYpD9ZrI",
+	    "6ix9ine - WAPAE": "IB1KQhbGtiM",
+	    "Jack Black - Peaches": "aW7bzd8uwyQ",
+	    "Hotboii ft. Polo G \"WTF Remix\"": "2eWIIel_KXM",
+	    "YoungBoy Never Broke Again": "SAheAwnUbcE", 
+	    "The Floor Is Lava 2: Into the Volcano!": "UqrHmWbQvYM",
+	    "Yahritza Y Su Esencia & Grupo Frontera - Frágil": "FJ0CRDzsuCs",
+	    "Post Malone - Chemical": "IzPQ_jA00bk",
+	    "Dax - \"To Be A Man\"": "tHxip2x-PLc",
+	    "Eladio Carrión ft. Anuel AA - Triste Verano": "SQymtMNE9BU",
+	    "Drake - Search & Rescue": "ntp9_iznQ-0",
+	    "Lil Yachty - Strike": "ENJh3qecaN4",
+	    "YoungBoy Never Broke Again feat. Nicki Minaj - WTF": "MM1wJ2bMPhQ",
+	    "Kodak Black - No Love For A Thug": "VWfhqWh9G2A",
+	    "Fuerza Regida X Banda Ms - Mentira No Es": "wwjqpCGXKVc",
+	    "Grupo Firme - Los Tucanes De Tijuana - Secuestro de Amor": "OMFbojf0y9Q",
+	    "Becky G, Peso Pluma - Chanel": "b2wQtu9YnWk",
+	    "Agust D 'Haegeum' Official Teaser": "v43K3JlH5QI",
+	}
+
+for (var [key, value] of Object.entries(songs)) 
+{
+	var select = document.getElementById("song-list");
+	var opt = document.createElement('option');
+	opt.value = value;
+	opt.innerHTML = key;
+	select.appendChild(opt);
+}
+</script>
+</html>

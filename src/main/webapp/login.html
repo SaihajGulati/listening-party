@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>201 Project - Login/Sign Up</title>
+<link rel="stylesheet" href="css/login.css">
+<script src="js/login.js"></script>
+</head>
+<body>
+	
+	<script>
+	
+	function useGuest()
+	{
+		localStorage.setItem("username", "Guest");
+		window.location.replace("http://localhost:8080/Project201/main.html")
+	}
+	
+	function logout_leave()
+	{
+		localStorage.removeItem('username');
+		window.location.replace("http://localhost:8080/Project201/landing.html")
+	}
+	
+	</script>
+	
+	<div class="container">
+		<div class="login">
+		<p class="loginlabel">Login</p>
+		<form name="Login" onsubmit="return log_in()">
+		<label for="username">Username:</label><br><br>
+		<input type="text" id="username" name="name"><br><br>
+		<label for="pwd">Password:</label><br><br>
+	  	<input type="password" id="pwd" name="pwd"><br><br>
+	  	<input type="submit" class="loginbutton" value="LOGIN">
+		</form>
+		</div>
+	</div>
+	
+	<!--  
+	<button type = "button" onclick="javascript: alert(localStorage.getItem('username'));">display local storage</button>
+	<button type = "button" onclick="javascript: localStorage.removeItem('username');">delete local storage</button>
+	 -->
+	 
+</body>
+</html>

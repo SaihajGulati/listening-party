@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/client.js"></script>
+  <title>Listening Party</title>
+</head>
+<body onload="connectToServer();">
+  <header>
+    <div class="user-info">
+      <h2>Hi <span id="userName"></span>!</h2>	
+      <button id="changeNameBtn" onclick="changeUserName()">Change Username</button>
+      <script>document.getElementById("userName").innerHTML += localStorage.getItem("username")</script>
+    </div>
+  </header>
+  <main>
+    <h1>Available Rooms</h1>
+    <div id="roomsList"></div>
+    <button id="createRoomBtn" onclick="createNewRoom()">Create Room</button>
+  </main>
+  <script src="js/client.js"></script>
+</body>
+</html>

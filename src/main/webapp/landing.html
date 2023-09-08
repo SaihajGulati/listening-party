@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>201 Project - Landing</title>
+<link rel="stylesheet" href="css/landing.css">
+<script src="js/login.js"></script>
+
+<script>
+
+function login()
+{
+	window.location.replace("http://localhost:8080/Project201/login.html")
+}
+
+function register()
+{
+	window.location.replace("http://localhost:8080/Project201/register.html")
+}
+
+function useGuest()
+{
+	localStorage.setItem("username", "Guest");
+	window.location.replace("http://localhost:8080/Project201/main.html")
+}
+
+</script>
+</head>
+<body>
+	<div class="logo">♫ TUNE SQUAD ♫</div>
+	<button class="loginBt" type = "button" onclick="login()">Log In</button>
+	<br>
+	<button class="RegisterBt" type = "button" onclick="register()">Register</button>
+	<br>
+	<button class="GuestBt" type = "button" onclick="useGuest()">Guest</button>
+</body>
+</html>

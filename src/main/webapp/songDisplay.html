@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+    const API_URL = "/MusicController?action=list";
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Songs</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<!--create table -->
+<body>
+    <h1>Top Songs</h1>
+    <table id="song-table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<!--table functionality -->
+<script>
+    $(document).ready(function() {
+        $.getJSON("MusicController?action=list", function(data) {
+            $.each(data, function(i, song){
+                var title = song.snippet.title;
+                var artist = song.snippet.artist;
+                var album = song.snippet.album;
+
+                var row = $("<tr>");
+                row.append($("<td>").text(title));
+                row.append($("<td>").text(artist));
+                row.append($("<td>").text(album));
+
+                var playButton = $("<button>").text("Play");
+                playButton.click(function() {
+                    // Call the MusicController servlet to play the selected song
+                    $.get("MusicController?action=play&songIndex=" + i);
+                });
+                row.append($("<td>").append(playButton));
+
+                $("#song-table tbody").append(row);
+            })
+        });
+
+        async function fetchTopSongs() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                displaySongs(data);
+            } catch (error) {
+                console.error("Failed to fetch top songs:", error);
+            }
+        }
+
+        function displaySongs(data) {
+
+            data.forEach((song, i) => {
+                const { title, artist, album } = song.snippet;
+
+                const row = $("<tr>");
+                row.append($("<td>").text(title));
+                row.append($("<td>").text(artist));
+                row.append($("<td>").text(album));
+
+                const addToQueueButton = $("<button>").text("Add to Queue");
+                addToQueueButton.click(() => {
+                    // Call the MusicController servlet to queue the selected song
+                    $.get(`/MusicController?action=queue&songIndex=${i}`);
+                });
+                row.append($("<td>").append(addToQueueButton));
+
+                $("#song-table tbody").append(row);
+            });
+        }
+
+        fetchTopSongs();
+    });
+</script>
+</body>
+</html>

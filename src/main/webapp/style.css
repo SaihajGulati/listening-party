@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+/* Style the table header row */
+#song-table thead tr {
+  background-color: #eee;
+  text-align: left;
+}
+
+/* Style the table cells */
+#song-table td, #song-table th {
+  padding: 8px;
+}
+
+/* Style the "Play" buttons */
+#song-table button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* Style the "Play" buttons on hover */
+#song-table button:hover {
+  background-color: #3e8e41;
+}
